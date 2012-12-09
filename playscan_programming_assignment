@@ -1,0 +1,25 @@
+Programming Assignment
+
+Write a Python program that reads a sequence of mathematical expressions from a file and prints the
+result of evaluating all expressions in the order they appear. The file consists of a series of expressions,
+one per line. Each line is in the format “function <value>”. ADD 5, for example, adds 5 to the current
+value. The initial value when the program starts is 0. A file contains maximum ten rows.
+The following functions shall be supportedjj :
+
+ADD (addition, +)
+SUB (subtraction, ­)
+MUL (multiplication, *)
+DIV (division, /)
+SQR (square, ^2) ­ without value
+
+Executing
+python yourprogram example.file
+should print “9”, where example.file is listed below.
+
+ADD 5
+ADD 7
+SUB 9
+SQR
+
+We don't expect this task to be challenging. Rather, we are interested in your style. If you don't feel
+comfortable with Python, feel free to use another language.
