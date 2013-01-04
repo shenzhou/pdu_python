@@ -31,7 +31,7 @@ class CALCULATOR():
         if os.path.isfile(path):
             self._abs_path = path
         else:
-            print 'Error: File: %s does not exist!' % path
+            print '[Error]: File: %s does not exist!' % path
             sys.exit(1)
 
     def run(self):
@@ -40,8 +40,11 @@ class CALCULATOR():
         for data in data_list:
             try:
                 result = self._data_compute(result, data[0], data[-1])
-            except Exception as e:
-                print 'Error: %s' % e
+            except ZeroDivisionError as e:
+                print '[DataComputeError]: %s' % e
+                sys.exit(1)
+            except ValueError as e:
+                print '[DataComputeError]: %s' % e
                 sys.exit(1)
         return result
 
@@ -49,17 +52,15 @@ class CALCULATOR():
         """ Extract data from the given file and Reconstruct the data
 
             Input:  path(string):       Absolute path of the given file
-            Output: data_list(list):    Nested list, contains functions and
-                                        values
+            Output: data_list(list):    Nested list, contains functions
+                                        and values
         """
         try:
-            fo = open(path, 'r')
-            raw_lines = fo.readlines()
-        except Exception as e:
-            print 'Error: %s' % e
+            with open(path, 'r') as fo:
+                raw_lines = fo.readlines()
+        except IOError as e:
+            print '[DataCollectError]: Cannot open %s' % path
             sys.exit(1)
-        finally:
-            fo.close()
 
         strip_lines = [item.strip() for item in raw_lines]
         data_list = []
@@ -71,8 +72,8 @@ class CALCULATOR():
         if len(data_list) <= 10:
             return data_list
         else:
-            print 'Error: %d rows required from the example file. Exceed '\
-                  'limitation: 10 ' % len(data_list)
+            print '[DataCollectError]: %d rows required from the example '\
+                  'file. Exceed limitation: 10 ' % len(data_list)
             sys.exit(1)
 
     def _data_compute(self, org_value, function, value):
@@ -96,13 +97,14 @@ class CALCULATOR():
         elif(function == 'SQR'):
             org_value = math.pow(org_value, 2)
         else:
-            print 'Error: function type: \'%s\' not supported!' % function
+            print '[DataComputeError]: Function type: \'%s\' not '\
+                  'supported!' % function
             sys.exit(1)
         return org_value
 
 if __name__ == '__main__':
     if len(sys.argv) is not 2:
-        print 'Error: Wrong number of arguments. Please use: ' \
+        print '[Error]: Wrong number of arguments. Please use: ' \
               'Path of the example file as the only input.'
         sys.exit(1)
 
