@@ -23,7 +23,6 @@ Comments:
 '''
 import os
 import sys
-import math
 
 class CALCULATOR():
     def __init__(self, raw_path):
@@ -95,7 +94,7 @@ class CALCULATOR():
         elif(function == 'DIV'):
             org_value = org_value / float(value)
         elif(function == 'SQR'):
-            org_value = math.pow(org_value, 2)
+            org_value = org_value**2
         else:
             print '[DataComputeError]: Function type: \'%s\' not '\
                   'supported!' % function
